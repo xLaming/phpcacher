@@ -1,5 +1,5 @@
 # PHPCacher
-  *
+  * Simple Advanced PHP Caching System
   
 # Usage:
   * 1. First you need to initialize the class
