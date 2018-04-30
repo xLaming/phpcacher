@@ -19,3 +19,10 @@
   ### PHPCacher::loadFile($name, $ext)
     * (string) - (string) Used to load files, $name is the file name and $ext is the extension
     
+# Notes:
+ * Automatically when a file is changed by the developer, it will force the user update the file cached in their browser.
+
+# Examples:
+ * https://paulao.me/phpcacher/example.php?f=bootstrap&e=css
+ * https://paulao.me/phpcacher/example.php?f=jquery&e=js
+ * https://paulao.me/phpcacher/example.php?f=welcome&e=html
