@@ -10,9 +10,9 @@ if (!$fileName || !$fileExt)
 }
 
 $file = new PHPCacher();
-$file->setDir('assets') or die('Directory not found!');
+$file->setDir('assets');
 $file->setMinify(true);
-$file->loadFile($fileName, $fileExt) or die('File not found!');
+$file->loadFile($fileName, $fileExt);
 
 exit;
 ?>
