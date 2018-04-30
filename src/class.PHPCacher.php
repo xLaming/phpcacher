@@ -209,7 +209,7 @@ class PHPCacher
 	{
 		if(!file_exists($dir))
 		{
-			return false;
+			die('Folder not found.');
 		}
 		$this->dir = $dir;
 		return true;
@@ -247,7 +247,7 @@ class PHPCacher
 		$file = $this->dir . $this->sep . $name . '.' . $ext;
 		if(!file_exists($file))
 		{
-			return false;
+			die('File not found.');
 		}
 		ob_flush();
 		$this->setMimeType($ext);
@@ -296,7 +296,7 @@ class PHPCacher
 		$ext = strtolower($extension);
 		if (!in_array($ext, array_keys($this->mimes)))
 		{
-			return false;
+			die('Extension not found.');
 		}
 		header('Content-Type: ' . $this->mimes[$ext]);
 		return true;
@@ -354,4 +354,3 @@ class PHPCacher
 	}
 }
 ?>
-
