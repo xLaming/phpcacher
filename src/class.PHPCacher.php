@@ -5,7 +5,7 @@
  *
  * @author Paulo Rodriguez (xLaming)
  * @link https://github.com/xlaming/phpcacher
- * @version 1.0
+ * @version 1.1
  */
 class PHPCacher
 {
@@ -251,7 +251,7 @@ class PHPCacher
 		}
 		ob_flush();
 		$this->setMimeType($ext);
-		$this->ETagHandler();
+		$this->ETagHandler($file);
 		$content = $this->minify ? $this->minify(file_get_contents($file), $ext) : file_get_contents($file);
 		echo $content;
 		ob_end_flush();
@@ -332,24 +332,30 @@ class PHPCacher
 
 	/**
 	 * Handle the caching system
+	 *
+	 * @param  string $dir file directory
 	 */
-	private function ETagHandler()
+	private function ETagHandler($dir)
 	{
 		list($time, $headers) = [
 			time(),
 			apache_request_headers()
 		];
-
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s ', $time) . 'GMT');
-		header('ETag: ' . sha1(time()));
-		header('Expires: Thu, 01-Jan-70 00:00:01 GMT');
-
+		
+		header("Date: " . gmdate("D, d M Y H:i:s", $time) . " GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s", $time) . " GMT");
+		header("Expires: " . gmdate("D, d M Y H:i:s", ($time + $this->time)) . " GMT");
+		
 		if (isset($headers['If-Modified-Since']))
 		{
-			if ($time - strtotime($headers['If-Modified-Since']) < $this->time)
+			if (filemtime($dir) > strtotime($headers['If-Modified-Since']))
+			{
+				return false;
+			}
+			else if ($time - strtotime($headers['If-Modified-Since']) < $this->time)
 			{
 				http_response_code(304);
-			}
+			} 
 		}
 	}
 }
